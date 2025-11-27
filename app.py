@@ -14,17 +14,17 @@ from dateutil.relativedelta import relativedelta #get_db_connection
 import traceback
 import streamlit.components.v1 as components  
 try:
-    from gantt_wrapper import gantt_wrapper
+    import gantt_wrapper
 except ImportError:
     st.warning("Componente 'gantt_wrapper' não encontrado. Certifique-se de que o componente foi instalado corretamente.")
-    def gantt_wrapper(gantt_data, key=None):
+    def gantt_wrapper_mock(gantt_data, key=None):
         st.error("Componente Gantt Wrapper não carregado. Verifique a instalação.")
         return None  
+    gantt_wrapper = gantt_wrapper_mock # Atribui a função mock ao nome esperado
 import json
 import random
 import time
 import urllib.parse
-import mysql.connector
 from mysql.connector import Error
 import json
 from datetime import datetime
@@ -2819,7 +2819,7 @@ def gerar_gantt_por_projeto(df, tipo_visualizacao, df_original_para_ordenacao, p
         # O componente `gantt_wrapper` espera os dados do gantt (gantt_data_base)
         # e retorna os dados atualizados (updated_gantt_data).
         
-        updated_gantt_data = gantt_wrapper(
+        updated_gantt_data = gantt_wrapper.gantt_wrapper(
             gantt_data=gantt_data_base, 
             key=f"gantt_por_projeto_{project['id']}"
         )
@@ -4066,7 +4066,13 @@ def gerar_gantt_consolidado(df, tipo_visualizacao, df_original_para_ordenacao, p
         </html>
     """
     # --- SUBSTITUIÇÃO: Usa o novo componente Wrapper ---
-    updated_gantt_data = gantt_wrapper(
+    # Definindo gantt_data_all_stages como uma lista vazia ou com dados de exemplo,
+    # pois a variável não estava definida neste escopo.
+    # **ATENÇÃO**: O usuário deve garantir que esta variável seja populada com os dados corretos.
+    if 'gantt_data_all_stages' not in locals():
+        gantt_data_all_stages = [] # Valor padrão para evitar erro de variável não definida
+        
+    updated_gantt_data = gantt_wrapper.gantt_wrapper(
         gantt_data=gantt_data_all_stages, 
         key=f"gantt_consolidado"
     )
