@@ -25,7 +25,6 @@ import json
 import random
 import time
 import urllib.parse
-from mysql.connector import Error
 import json
 from datetime import datetime
 try:
