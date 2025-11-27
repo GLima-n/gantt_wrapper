@@ -14,7 +14,7 @@ from dateutil.relativedelta import relativedelta #get_db_connection
 import traceback
 import streamlit.components.v1 as components  
 try:
-    import gantt_wrapper
+    import  __init__
 except ImportError:
     st.warning("Componente 'gantt_wrapper' não encontrado. Certifique-se de que o componente foi instalado corretamente.")
     def gantt_wrapper_mock(gantt_data, key=None):
